@@ -29,6 +29,7 @@ namespace CostOfTile
                 IsParsable = Int32.TryParse(Console.ReadLine(), out Width);
             }
             while (IsParsable == false);
+
             IsParsable= false;
             do
             { 
@@ -36,6 +37,7 @@ namespace CostOfTile
                 IsParsable = Int32.TryParse(Console.ReadLine(), out Length);
             }
             while (IsParsable == false);
+
             IsParsable= false;
             do
             {
@@ -43,6 +45,7 @@ namespace CostOfTile
                 IsParsable = Int32.TryParse (Console.ReadLine(), out CostPerTile);
             }
             while (IsParsable == false);
+
             IsParsable = false;
             FloorCalculations(Width, Length, CostPerTile);
         }
