@@ -7,11 +7,11 @@ namespace CostOfTile
 {
     public class InputHandler
     {
-        int Width;
-        int Length;
-        int CostPerTile;
+        int width;
+        int length;
+        int costPerTile;
         
-        static void FloorCalculations(int Width, int Length, int CostPerTile)
+        static void FloorCalculations(int width, int length, int costPerTile)
         {
             // Here we should calculate the cost of the flooring process 
             // something like
