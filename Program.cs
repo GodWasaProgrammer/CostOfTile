@@ -2,13 +2,18 @@
 {
     public class Program
     {
+        const decimal COSTPERHOUR = 86; // dollars
+        const decimal FLOORINGPERHOUR = 18.580608M; // square centimeters ( 20 foot )
         static void Main()
         {
             decimal width;
             decimal length;
             decimal costPerTile;
             decimal floorSize;
-            decimal totalCost = 0;
+            decimal materialCost;
+            decimal totalCost;
+            decimal workHours;
+            decimal wageCost;
             bool isParsable;
             Console.WriteLine("Welcome to the Tile Cost Processing software");
             Console.WriteLine("Here you will enter width and length of floor");
@@ -26,7 +31,6 @@
 
             } while (isParsable == false);
 
-            isParsable = false;
             do
             {
                 Console.WriteLine("Insert the length of your floor");
@@ -38,7 +42,6 @@
 
             } while (isParsable == false);
 
-            isParsable = false;
             do
             {
                 Console.WriteLine("Insert the cost of your Tile");
@@ -50,28 +53,40 @@
 
             } while (isParsable == false);
 
-
-            Console.WriteLine("Is your floor a Rectangle? if yes, type y, otherwise, type n");
-            string ?floorType = Console.ReadLine();
+            Console.WriteLine("Is your floor a Rectangle? if yes, type y");
+            string floorType = Console.ReadLine();
 
             // Here we should calculate the cost of the flooring process on a rectangular room
             // something like
             // 
+            floorSize = width * length;
+            
+            // rectangle
             if (floorType == "y")
             {
-                floorSize = width * length;
-                totalCost = floorSize * costPerTile;
                 
             }
-            
             // and if its not a rectangle its a god damn triangle right? lets F'n hope so.
-            if (floorType == "n")
+            else
             {
                 floorSize = width * length / 2;
-                totalCost = floorSize * costPerTile;
+                
             }
+            // the amount of work hours needed for your specified floor.
+            materialCost = floorSize * costPerTile;
 
-            Console.WriteLine($"Your total cost is:{totalCost}");
+            Console.WriteLine($"The Material cost is:{Math.Round(materialCost, 3)} Dollars");
+            // hours needed to cover the specified floor with tiles
+            workHours = floorSize / FLOORINGPERHOUR;
+            Console.WriteLine($"The amount of work hours needed for your floor: {Math.Round(workHours, 3)}");
+            // your wagecost for flooring your specific floor
+            wageCost = workHours * COSTPERHOUR;
+            
+            Console.WriteLine($"The cost of the actual flooring: {Math.Round(wageCost, 3)} Dollars");
+
+            // the complete cost of flooring and material
+            totalCost = wageCost + materialCost;
+            Console.WriteLine($"Your total cost is:{Math.Round(totalCost, 3)} Dollars");
 
             
 
