@@ -53,7 +53,7 @@
 
             } while (isParsable == false);
 
-            Console.WriteLine("Is your floor a Rectangle? if yes, type y");
+            Console.WriteLine("Is your floor not a rectangle? if yes, type y");
             string floorType = Console.ReadLine();
 
             // Here we should calculate the cost of the flooring process on a rectangular room
@@ -61,17 +61,12 @@
             // 
             floorSize = width * length;
             
-            // rectangle
+            // non-rectangular floor
             if (floorType == "y")
             {
-                
-            }
-            // and if its not a rectangle its a god damn triangle right? lets F'n hope so.
-            else
-            {
                 floorSize = width * length / 2;
-                
             }
+           
             // the amount of work hours needed for your specified floor.
             materialCost = floorSize * costPerTile;
 
