@@ -189,7 +189,7 @@ namespace CostOfTile
 
             if (floorType == 2)
             {
-                floorSize = baseOfTriangle * height;
+                floorSize = baseOfTriangle * height / 2;
             }
 
             // Area = π·r 2
