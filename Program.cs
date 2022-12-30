@@ -10,12 +10,7 @@ namespace CostOfTile
         static void Main()
         {
             decimal costPerTile;
-            decimal materialCost;
-            decimal totalCost;
-            decimal workHours;
-            decimal wageCost;
             bool isParsable;
-            int iterationcounter = 0;
             Console.WriteLine("Welcome to the Tile Cost Processing software");
             Console.WriteLine("Here you will enter width and length of floor");
             Console.WriteLine("And also the cost per floor tile");
@@ -38,7 +33,7 @@ namespace CostOfTile
             Console.WriteLine("2. triangle");
             Console.WriteLine("3. Circle");
             int floorType;
-            do 
+            do
             {
                 isParsable = Int32.TryParse(Console.ReadLine(), out floorType);
 
@@ -48,7 +43,7 @@ namespace CostOfTile
                 }
 
             }
-            while((isParsable == false) && ( floorType != 1) && ( floorType != 2) && ( floorType != 3));
+            while ((isParsable == false) && (floorType != 1) && (floorType != 2) && (floorType != 3));
 
             decimal baseOfTriangle = 0;
             decimal height = 0;
@@ -57,11 +52,12 @@ namespace CostOfTile
             decimal radius = 0;
             decimal diameter = 0M;
             decimal floorSize = 0;
-            string printParameter1 = "meme";
-            decimal parameterValue1;
+            string printParameterName = "meme";
             string choice = "";
 
             // controls our iterationcounter logic -_-
+            int iterationcounter = 0;
+
             if (floorType == 1 || floorType == 2)
             {
                 iterationcounter = 2;
@@ -71,115 +67,124 @@ namespace CostOfTile
             {
                 iterationcounter = 1;
             }
-            
+
+            // our massive loop of hell
             do
             {
                 // rectangle
                 if (floorType == 1)
                 {
-                    
+                    // if our counter is on 2, its time for width
                     if (iterationcounter == 2)
                     {
-                        printParameter1 = "width";
-                        
-                    }
+                        printParameterName = "width";
 
+                    }
+                    // otherwise its time for length
                     if (iterationcounter == 1)
                     {
-                        printParameter1 = "length";
+                        printParameterName = "length";
                     }
-                    
+
                 }
 
                 // triangle
                 if (floorType == 2)
                 {
-                    
+                    // if our counter is on 2
                     if (iterationcounter == 2)
                     {
-                        printParameter1 = "base";
+                        printParameterName = "base";
                     }
-
+                    // if our counter is on 1
                     if (iterationcounter == 1)
                     {
-                        printParameter1 = "height";
+                        printParameterName = "height";
                     }
 
                 }
                 // circle
                 if (floorType == 3)
                 {
-                    
                     Console.WriteLine("Would you like to calculate your floorsize based on radius or diameter? type r if you want do it by radius");
 
                     choice = Console.ReadLine();
-
+                    // did you input r? if so, this
                     if (choice == "r")
                     {
-                        printParameter1 = "radius";
-                        
-                    }
+                        printParameterName = "radius";
 
+                    }
+                    // otherwise its diameter
                     else
                     {
-                        printParameter1 = "diameter";
-                        
+                        printParameterName = "diameter";
+
                     }
 
                 }
+                // prints whatever we calculating at the moment
+                Console.WriteLine($"Input the {printParameterName} of the floor");
 
-                Console.WriteLine($"Input the {printParameter1} of the floor");
-                isParsable = decimal.TryParse(Console.ReadLine(), out parameterValue1);
-
+                // parses and puts out our value, parametervalue is passed on later on in the if statements
+                isParsable = decimal.TryParse(Console.ReadLine(), out decimal parameterValue);
+                // couldnt parse your BS
                 if (isParsable == false)
                 {
                     Console.WriteLine("Your input wasnt a number. Try again.");
                 }
-
+                // if its a rectangle...
                 if (floorType == 1)
-                {
+                {    // and our iterationcounter is 2
                     if (iterationcounter == 2)
                     {
-                        width = parameterValue1;
+                        width = parameterValue;
                     }
 
+                    // if our counter is at 1
                     if (iterationcounter == 1)
                     {
-                        length = parameterValue1;
+                        length = parameterValue;
                     }
-                }
 
+                }
+                // if its a triangle
                 if (floorType == 2)
-                {
+                {   // if counter is at 2
                     if (iterationcounter == 2)
                     {
-                        baseOfTriangle = parameterValue1;
+                        baseOfTriangle = parameterValue;
                     }
 
+                    // if counter is at 1
                     if (iterationcounter == 1)
                     {
-                        height = parameterValue1;
+                        height = parameterValue;
                     }
-                }
 
+                }
+                // if its a circle
                 if (floorType == 3)
-                {
+                {   // if we wanted to calculate it by radius
                     if (choice == "r")
                     {
-                        radius = parameterValue1;
+                        radius = parameterValue;
                     }
 
+                    // otherwise we will do it by diameter
                     else
                     {
-                        diameter = parameterValue1;
+                        diameter = parameterValue;
                     }
-                    
+
                 }
+                // if we successfully parsed
                 if (isParsable)
                 {
                     iterationcounter--;
                 }
-            } 
+
+            }
             while (isParsable == false || iterationcounter > 0);
 
             if (floorType == 1)
@@ -196,8 +201,8 @@ namespace CostOfTile
             if (floorType == 3)
             {
                 if (choice == "r")
-                { 
-                floorSize = MYPI * radius * radius;
+                {
+                    floorSize = MYPI * (radius * radius);
                 }
 
                 else
@@ -206,6 +211,11 @@ namespace CostOfTile
                 }
 
             }
+
+            decimal materialCost;
+            decimal totalCost;
+            decimal workHours;
+            decimal wageCost;
 
             // the amount of work hours needed for your specified floor.
             materialCost = floorSize * costPerTile;
@@ -216,7 +226,7 @@ namespace CostOfTile
             Console.WriteLine($"The amount of work hours needed for your floor: {Math.Round(workHours, 3)}");
             // your wagecost for flooring your specific floor
             wageCost = workHours * COSTPERHOUR;
-            
+
             Console.WriteLine($"The cost of the actual flooring: {Math.Round(wageCost, 3)} Dollars");
 
             // the complete cost of flooring and material
