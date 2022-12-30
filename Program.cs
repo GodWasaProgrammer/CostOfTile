@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.Metrics;
+using System.Runtime.InteropServices;
 
 namespace CostOfTile
 {
@@ -69,6 +70,7 @@ namespace CostOfTile
             }
 
             // our massive loop of hell
+            decimal parameterValue;
             do
             {
                 // rectangle
@@ -129,7 +131,7 @@ namespace CostOfTile
                 Console.WriteLine($"Input the {printParameterName} of the floor");
 
                 // parses and puts out our value, parametervalue is passed on later on in the if statements
-                isParsable = decimal.TryParse(Console.ReadLine(), out decimal parameterValue);
+                isParsable = decimal.TryParse(Console.ReadLine(), out parameterValue);
                 // couldnt parse your BS
                 if (isParsable == false)
                 {
@@ -180,14 +182,14 @@ namespace CostOfTile
                     }
 
                 }
-                // if we successfully parsed
-                if (isParsable)
+                // if we successfully parsed or if we gave a negative value...
+                if ((isParsable) || (parameterValue > 0))
                 {
                     iterationcounter--;
                 }
 
             }
-            while (isParsable == false || iterationcounter > 0);
+            while ((isParsable == false) || (iterationcounter > 0) || (parameterValue > 0));
 
             if (floorType == 1)
             {
