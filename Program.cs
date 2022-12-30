@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CostOfTile
+﻿namespace CostOfTile
 {
     public class Program
     {
