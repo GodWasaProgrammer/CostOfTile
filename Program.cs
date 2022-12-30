@@ -58,7 +58,7 @@ namespace CostOfTile
             // controls our iterationcounter logic -_-
             int iterationcounter = 0;
 
-            if (floorType == 1 || floorType == 2)
+            if ((floorType == 1) || (floorType == 2))
             {
                 iterationcounter = 2;
             }
@@ -109,6 +109,8 @@ namespace CostOfTile
                     Console.WriteLine("Would you like to calculate your floorsize based on radius or diameter? type r if you want do it by radius");
 
                     choice = Console.ReadLine();
+                    choice = choice.ToLower();
+
                     // did you input r? if so, this
                     if (choice == "r")
                     {
@@ -221,9 +223,11 @@ namespace CostOfTile
             materialCost = floorSize * costPerTile;
 
             Console.WriteLine($"The Material cost is:{Math.Round(materialCost, 3)} Dollars");
+
             // hours needed to cover the specified floor with tiles
             workHours = floorSize / FLOORINGPERHOUR;
             Console.WriteLine($"The amount of work hours needed for your floor: {Math.Round(workHours, 3)}");
+
             // your wagecost for flooring your specific floor
             wageCost = workHours * COSTPERHOUR;
 
