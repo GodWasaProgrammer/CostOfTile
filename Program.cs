@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.Metrics;
-using System.Runtime.InteropServices;
+﻿using System;
 
 namespace CostOfTile
 {
@@ -7,240 +6,400 @@ namespace CostOfTile
     {
         const decimal COSTPERHOUR = 86; // dollars
         const decimal FLOORINGPERHOUR = 18.580608M; // square centimeters ( 20 foot )
-        const decimal MYPI = 3.14159265358979M;
+
         static void Main()
         {
             decimal costPerTile;
-            bool isParsable;
-            Console.WriteLine("Welcome to the Tile Cost Processing software");
-            Console.WriteLine("Here you will enter width and length of floor");
-            Console.WriteLine("And also the cost per floor tile");
-            Console.WriteLine("This software will then return the cost of the total");
 
+            Console.WriteLine("Welcome to the Tile Cost Processing software");
+            bool isParsable;
             do
             {
-                Console.WriteLine("Insert the cost of your Tile");
+                Console.WriteLine("enter your cost per tile");
                 isParsable = decimal.TryParse(Console.ReadLine(), out costPerTile);
 
                 if (isParsable == false)
                 {
-                    Console.WriteLine("Your input wasnt a number. Try again.");
+                    Console.WriteLine("Could not parse. try again");
                 }
 
-            } while (isParsable == false);
+                if (isParsable)
+                {
+                    if (costPerTile == 0)
+                    {
+                        Console.WriteLine("You entered 0 or nothing, try again");
+                        isParsable = false;
+                    }
 
-            Console.WriteLine("Pick your floortype, enter the correlating number");
-            Console.WriteLine("1. rectangle");
-            Console.WriteLine("2. triangle");
-            Console.WriteLine("3. Circle");
+                    if (costPerTile < 0)
+                    {
+                        Console.WriteLine("No negative numbers. try again");
+                        isParsable = false;
+                    }
+
+                }
+
+            }
+            while (isParsable == false);
+
+            Console.WriteLine("Pick your floortype, enter the correlating number \n 1. rectangle \n 2. triangle \n 3. circle ");
+
             int floorType;
+
             do
             {
                 isParsable = Int32.TryParse(Console.ReadLine(), out floorType);
-
                 if (floorType != 1 && floorType != 2 && floorType != 3)
                 {
                     Console.WriteLine("That is not a valid option.");
+                    isParsable = false;
                 }
 
             }
-            while ((isParsable == false) && (floorType != 1) && (floorType != 2) && (floorType != 3));
+            while (isParsable == false);
 
-            decimal baseOfTriangle = 0;
-            decimal height = 0;
-            decimal width = 0;
-            decimal length = 0;
-            decimal radius = 0;
-            decimal diameter = 0M;
+
             decimal floorSize = 0;
-            string printParameterName = "meme";
-            string choice = "";
-
-            // controls our iterationcounter logic -_-
-            int iterationcounter = 0;
-
-            if ((floorType == 1) || (floorType == 2))
-            {
-                iterationcounter = 2;
-            }
-
-            if (floorType == 3)
-            {
-                iterationcounter = 1;
-            }
-
-            // our massive loop of hell
-            decimal parameterValue;
-            do
-            {
-                // rectangle
-                if (floorType == 1)
-                {
-                    // if our counter is on 2, its time for width
-                    if (iterationcounter == 2)
-                    {
-                        printParameterName = "width";
-
-                    }
-                    // otherwise its time for length
-                    if (iterationcounter == 1)
-                    {
-                        printParameterName = "length";
-                    }
-
-                }
-
-                // triangle
-                if (floorType == 2)
-                {
-                    // if our counter is on 2
-                    if (iterationcounter == 2)
-                    {
-                        printParameterName = "base";
-                    }
-                    // if our counter is on 1
-                    if (iterationcounter == 1)
-                    {
-                        printParameterName = "height";
-                    }
-
-                }
-                // circle
-                if (floorType == 3)
-                {
-                    Console.WriteLine("Would you like to calculate your floorsize based on radius or diameter? type r if you want do it by radius");
-
-                    choice = Console.ReadLine();
-                    choice = choice.ToLower();
-
-                    // did you input r? if so, this
-                    if (choice == "r")
-                    {
-                        printParameterName = "radius";
-
-                    }
-                    // otherwise its diameter
-                    else
-                    {
-                        printParameterName = "diameter";
-
-                    }
-
-                }
-                // prints whatever we calculating at the moment
-                Console.WriteLine($"Input the {printParameterName} of the floor");
-
-                // parses and puts out our value, parametervalue is passed on later on in the if statements
-                isParsable = decimal.TryParse(Console.ReadLine(), out parameterValue);
-                // couldnt parse your BS
-                if (isParsable == false)
-                {
-                    Console.WriteLine("Your input wasnt a number. Try again.");
-                }
-                // if its a rectangle...
-                if (floorType == 1)
-                {    // and our iterationcounter is 2
-                    if (iterationcounter == 2)
-                    {
-                        width = parameterValue;
-                    }
-
-                    // if our counter is at 1
-                    if (iterationcounter == 1)
-                    {
-                        length = parameterValue;
-                    }
-
-                }
-                // if its a triangle
-                if (floorType == 2)
-                {   // if counter is at 2
-                    if (iterationcounter == 2)
-                    {
-                        baseOfTriangle = parameterValue;
-                    }
-
-                    // if counter is at 1
-                    if (iterationcounter == 1)
-                    {
-                        height = parameterValue;
-                    }
-
-                }
-                // if its a circle
-                if (floorType == 3)
-                {   // if we wanted to calculate it by radius
-                    if (choice == "r")
-                    {
-                        radius = parameterValue;
-                    }
-
-                    // otherwise we will do it by diameter
-                    else
-                    {
-                        diameter = parameterValue;
-                    }
-
-                }
-                // if we successfully parsed or if we gave a negative value...
-                if ((isParsable) || (parameterValue > 0))
-                {
-                    iterationcounter--;
-                }
-
-            }
-            while ((isParsable == false) || (iterationcounter > 0) || (parameterValue > 0));
-
+            // rectangle 
             if (floorType == 1)
             {
-                floorSize = width * length;
+
+                decimal length;
+                do
+                {
+                    Console.WriteLine("Enter the height of our rectangle");
+
+                    isParsable = decimal.TryParse(Console.ReadLine(), out length);
+
+                    if (isParsable == false)
+                    {
+                        Console.WriteLine("Could not parse. try again");
+                    }
+
+                    if (isParsable)
+                    {
+                        if (length < 0)
+                        {
+                            Console.WriteLine("No negative numbers");
+                            isParsable = false;
+                        }
+
+                        if (length == 0)
+                        {
+                            Console.WriteLine("You entered 0 or nothing.. try again");
+                            isParsable = false;
+                        }
+                    }
+
+                }
+                while (isParsable == false);
+
+                do
+                {
+                    Console.WriteLine("Enter the width of our rectangle");
+
+                    isParsable = decimal.TryParse(Console.ReadLine(), out decimal width);
+                    if (isParsable == false)
+                    {
+                        Console.WriteLine("Could not parse. try again");
+                    }
+
+                    if (isParsable)
+                    {
+                        if (width < 0)
+                        {
+                            Console.WriteLine("No negative numbers");
+                            isParsable = false;
+                        }
+
+                        if (width == 0)
+                        {
+                            Console.WriteLine("You entered 0 or nothing.. try again");
+                            isParsable = false;
+                        }
+
+                        floorSize = length * width;
+
+                    }
+
+                }
+                while (isParsable == false);
+
             }
 
+
+            // triangle, 2 different methods of calculation, herons formula and pythagoras ( b * h )
             if (floorType == 2)
             {
-                floorSize = baseOfTriangle * height / 2;
-            }
-
-            // Area = π·r 2
-            if (floorType == 3)
-            {
-                if (choice == "r")
+                int selector;
+                do
                 {
-                    floorSize = MYPI * (radius * radius);
+                    Console.WriteLine("would you like to calculate by base & height? enter 1,\n otherwise it will be calculated by giving us the length of the three sides");
+
+                    isParsable = Int32.TryParse(Console.ReadLine(), out selector);
+
+                    if (isParsable == false)
+                    {
+                        Console.WriteLine("Could not parse. try again");
+                    }
+
+                }
+                while (isParsable == false);
+
+                if (selector == 1)
+                {
+                    decimal baseOfTriangle;
+                    do
+                    {
+                        Console.WriteLine("enter the base of your triangle");
+                        isParsable = decimal.TryParse(Console.ReadLine(), out baseOfTriangle);
+
+                        if (isParsable == false)
+                        {
+                            Console.WriteLine("Could not parse. try again");
+                        }
+
+                        if (isParsable)
+                        {
+                            if (baseOfTriangle < 0)
+                            {
+                                Console.WriteLine("No negative numbers");
+                                isParsable = false;
+                            }
+
+                            if (baseOfTriangle == 0)
+                            {
+                                Console.WriteLine("You entered 0 or nothing.. try again");
+                                isParsable = false;
+                            }
+
+                        }
+
+                    }
+                    while (isParsable == false);
+
+                    do
+                    {
+                        Console.WriteLine("Enter the height of your triangle");
+                        isParsable = decimal.TryParse(Console.ReadLine(), out decimal height);
+
+                        if (isParsable == false)
+                        {
+                            Console.WriteLine("Could not parse. try again");
+                        }
+
+                        if (isParsable)
+                        {
+                            if (height < 0)
+                            {
+                                Console.WriteLine("No Negative numbers");
+                                isParsable = false;
+                            }
+
+                            if (height == 0)
+                            {
+                                Console.WriteLine("You entered 0 or nothing.. try again");
+                                isParsable = false;
+                            }
+
+                            floorSize = baseOfTriangle * height / 2;
+
+                        }
+
+                    }
+                    while (isParsable == false);
+
                 }
 
                 else
                 {
-                    floorSize = MYPI * diameter;
+                    decimal sideA;
+                    decimal sideB;
+                    Console.WriteLine("Enter your 3 sides of your triangle");
+                    do
+                    {
+                        Console.WriteLine($"Enter side A");
+                        isParsable = decimal.TryParse(Console.ReadLine(), out sideA);
+
+                        if (isParsable == false)
+                        {
+                            Console.WriteLine("Couldnt parse. try again");
+                        }
+
+                        if (isParsable)
+                        {
+                            if (sideA < 0)
+                            {
+                                Console.WriteLine("No negative numbers");
+                                isParsable = false;
+                            }
+
+                            if (sideA == 0)
+                            {
+                                Console.WriteLine("You entered 0 or nothing.. try again");
+                            }
+
+                        }
+
+                    }
+                    while (isParsable == false);
+
+                    do
+                    {
+                        Console.WriteLine($"Enter side B");
+                        isParsable = decimal.TryParse(Console.ReadLine(), out sideB);
+
+                        if (isParsable == false)
+                        {
+                            Console.WriteLine("Couldnt parse. try again");
+                        }
+
+                        if (isParsable)
+                        {
+                            if (sideB < 0)
+                            {
+                                Console.WriteLine("No negative numbers");
+                                isParsable = false;
+                            }
+
+                            if (sideB == 0)
+                            {
+                                Console.WriteLine("You entered 0 or nothing.. try again");
+                            }
+
+                        }
+
+                    }
+                    while (isParsable == false);
+
+                    do
+                    {
+                        Console.WriteLine($"Enter side C");
+                        isParsable = decimal.TryParse(Console.ReadLine(), out decimal sideC);
+
+                        if (isParsable == false)
+                        {
+                            Console.WriteLine("Couldnt parse. try again");
+                        }
+
+                        if (isParsable)
+                        {
+                            if (sideC < 0)
+                            {
+                                Console.WriteLine("No negative numbers");
+                                isParsable = false;
+                            }
+
+                            if (sideC == 0)
+                            {
+                                Console.WriteLine("You entered 0 or nothing.. try again");
+                            }
+
+                            double a = Convert.ToDouble(sideA);
+                            double b = Convert.ToDouble(sideB);
+                            double c = Convert.ToDouble(sideC);
+                            double s = (a + b + c);
+                            double Area = Math.Sqrt(s * (s - a) * (s - b) * (s - c));
+                            floorSize = Convert.ToDecimal(Area);
+                        }
+
+                    }
+                    while (isParsable == false);
+
+                }
+
+            }
+            // circles
+            if (floorType == 3)
+            {
+                Console.WriteLine("Would you like to calculate your circle by radius or diameter? enter r for radius, else it will be by diameter.");
+
+                string circleChoice = Console.ReadLine();
+                if (circleChoice == "r")
+                {
+                    do
+                    {
+                        Console.WriteLine("Enter your radius to calculate your floor size");
+                        isParsable = decimal.TryParse(Console.ReadLine(), out decimal radius);
+
+                        if (radius < 0)
+                        {
+                            Console.WriteLine("No negative numbers.");
+                        }
+
+                        if (radius == 0)
+                        {
+                            Console.WriteLine("You entered 0 or nothing.. try again");
+                        }
+
+                        if (isParsable)
+                        {
+                            radius *= radius;
+                            floorSize = Convert.ToDecimal(Math.PI) * radius;
+                            double floorSizedouble = Convert.ToDouble((floorSize));
+                            floorSizedouble = Math.Sqrt(floorSizedouble);
+                            floorSize = Convert.ToDecimal(floorSizedouble);
+                        }
+
+                    }
+
+                    while (isParsable == false);
+
+                }
+
+                else
+                {
+                    do
+                    {
+                        Console.WriteLine("Enter your diameter to calculate your circle area by diameter");
+
+                        isParsable = decimal.TryParse(Console.ReadLine(), out decimal diameter);
+
+                        if (diameter < 0)
+                        {
+                            Console.WriteLine("No negative numbers.");
+                        }
+
+                        if (diameter == 0)
+                        {
+                            Console.WriteLine("You entered 0 or nothing.. try again");
+                        }
+
+                        if (isParsable)
+                        {
+                            floorSize = Convert.ToDecimal(Math.PI) * diameter;
+                            double floorSizeDouble = Convert.ToDouble((floorSize));
+                            floorSizeDouble = Math.Sqrt(floorSizeDouble);
+                            floorSize = Convert.ToDecimal(floorSizeDouble);
+                        }
+
+                    }
+
+                    while (isParsable == false);
                 }
 
             }
 
-            decimal materialCost;
-            decimal totalCost;
-            decimal workHours;
-            decimal wageCost;
-
             // the amount of work hours needed for your specified floor.
+            decimal materialCost;
             materialCost = floorSize * costPerTile;
-
             Console.WriteLine($"The Material cost is:{Math.Round(materialCost, 3)} Dollars");
 
             // hours needed to cover the specified floor with tiles
+            decimal workHours;
             workHours = floorSize / FLOORINGPERHOUR;
             Console.WriteLine($"The amount of work hours needed for your floor: {Math.Round(workHours, 3)}");
 
             // your wagecost for flooring your specific floor
+            decimal wageCost;
             wageCost = workHours * COSTPERHOUR;
-
             Console.WriteLine($"The cost of the actual flooring: {Math.Round(wageCost, 3)} Dollars");
 
             // the complete cost of flooring and material
+            decimal totalCost;
             totalCost = wageCost + materialCost;
             Console.WriteLine($"Your total cost is:{Math.Round(totalCost, 3)} Dollars");
 
         }
-
     }
-
 }
