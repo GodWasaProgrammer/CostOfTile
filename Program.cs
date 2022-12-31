@@ -375,23 +375,19 @@
             }
 
             // the amount of work hours needed for your specified floor.
-            decimal materialCost;
-            materialCost = floorSize * costPerTile;
+            decimal materialCost = floorSize * costPerTile;
             Console.WriteLine($"The Material cost is:{Math.Round(materialCost, 3)} Dollars");
 
             // hours needed to cover the specified floor with tiles
-            decimal workHours;
-            workHours = floorSize / FLOORINGPERHOUR;
+            decimal workHours = floorSize / FLOORINGPERHOUR;
             Console.WriteLine($"The amount of work hours needed for your floor: {Math.Round(workHours, 3)}");
 
             // your wagecost for flooring your specific floor
-            decimal wageCost;
-            wageCost = workHours * COSTPERHOUR;
+            decimal wageCost = workHours * COSTPERHOUR;
             Console.WriteLine($"The cost of the actual flooring: {Math.Round(wageCost, 3)} Dollars");
 
             // the complete cost of flooring and material
-            decimal totalCost;
-            totalCost = wageCost + materialCost;
+            decimal totalCost = wageCost + materialCost;
             Console.WriteLine($"Your total cost is:{Math.Round(totalCost, 3)} Dollars");
 
         }
