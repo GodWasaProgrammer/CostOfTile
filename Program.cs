@@ -126,7 +126,7 @@
             // triangle, 2 different methods of calculation, herons formula and pythagoras ( b * h )
             if (floorType == 2)
             {
-                int selector = 0;
+                int selector;
                 do
                 {
                     Console.WriteLine("would you like to calculate by base & height? enter 1,\n otherwise it will be calculated by giving us the length of the three sides");
