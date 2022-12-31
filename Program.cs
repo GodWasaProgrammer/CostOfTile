@@ -56,7 +56,6 @@
             }
             while (isParsable == false);
 
-
             decimal floorSize = 0;
             // rectangle 
             if (floorType == 1)
@@ -117,7 +116,6 @@
                         }
 
                         floorSize = length * width;
-
                     }
 
                 }
@@ -125,16 +123,19 @@
 
             }
 
-
             // triangle, 2 different methods of calculation, herons formula and pythagoras ( b * h )
             if (floorType == 2)
             {
-                int selector;
+                int selector = 0;
                 do
                 {
                     Console.WriteLine("would you like to calculate by base & height? enter 1,\n otherwise it will be calculated by giving us the length of the three sides");
 
                     isParsable = Int32.TryParse(Console.ReadLine(), out selector);
+                    if (selector == 0)
+                    {
+                        isParsable = true;
+                    }
 
                     if (isParsable == false)
                     {
@@ -201,7 +202,6 @@
                             }
 
                             floorSize = baseOfTriangle * height / 2;
-
                         }
 
                     }
@@ -211,13 +211,14 @@
 
                 else
                 {
+                    // cant be inlined if i want to perform the calculation at the end 
                     double sideA;
-                    decimal sideB;
+                    double sideB;
                     Console.WriteLine("Enter your 3 sides of your triangle");
                     do
                     {
                         Console.WriteLine($"Enter side A");
-                        isParsable = decimal.TryParse(Console.ReadLine(), out sideA);
+                        isParsable = double.TryParse(Console.ReadLine(), out sideA);
 
                         if (isParsable == false)
                         {
@@ -245,7 +246,7 @@
                     do
                     {
                         Console.WriteLine($"Enter side B");
-                        isParsable = decimal.TryParse(Console.ReadLine(), out sideB);
+                        isParsable = double.TryParse(Console.ReadLine(), out sideB);
 
                         if (isParsable == false)
                         {
@@ -273,7 +274,7 @@
                     do
                     {
                         Console.WriteLine($"Enter side C");
-                        isParsable = decimal.TryParse(Console.ReadLine(), out decimal sideC);
+                        isParsable = double.TryParse(Console.ReadLine(), out double sideC);
 
                         if (isParsable == false)
                         {
@@ -293,11 +294,8 @@
                                 Console.WriteLine("You entered 0 or nothing.. try again");
                             }
 
-                            double a = Convert.ToDouble(sideA);
-                            double b = Convert.ToDouble(sideB);
-                            double c = Convert.ToDouble(sideC);
-                            double s = (a + b + c);
-                            double Area = Math.Sqrt(s * (s - a) * (s - b) * (s - c));
+                            double s = (sideA + sideB + sideC) / 2;
+                            double Area = Math.Sqrt(s * (s - sideA) * (s - sideB) * (s - sideC));
                             floorSize = Convert.ToDecimal(Area);
                         }
 
@@ -340,7 +338,6 @@
                         }
 
                     }
-
                     while (isParsable == false);
 
                 }
@@ -372,7 +369,6 @@
                         }
 
                     }
-
                     while (isParsable == false);
                 }
 
