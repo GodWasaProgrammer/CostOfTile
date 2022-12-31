@@ -211,7 +211,7 @@
 
                 else
                 {
-                    decimal sideA;
+                    double sideA;
                     decimal sideB;
                     Console.WriteLine("Enter your 3 sides of your triangle");
                     do
