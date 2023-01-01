@@ -86,6 +86,7 @@
                             Console.WriteLine("You entered 0 or nothing.. try again");
                             isParsable = false;
                         }
+
                     }
 
                 }
@@ -123,187 +124,40 @@
 
             }
 
-            // triangle, 2 different methods of calculation, herons formula and pythagoras ( b * h )
+            // herons formula
             if (floorType == 2)
+
             {
-                int selector;
+                double sideA;
+                Console.WriteLine("Enter your 3 sides of your triangle");
                 do
                 {
-                    Console.WriteLine("would you like to calculate by base & height? enter 1,\n otherwise it will be calculated by giving us the length of the three sides");
-
-                    isParsable = Int32.TryParse(Console.ReadLine(), out selector);
-                    if (selector == 0)
-                    {
-                        isParsable = true;
-                    }
-
-                    if (isParsable == false)
-                    {
-                        Console.WriteLine("Could not parse. try again");
-                    }
-
+                    Console.WriteLine($"Enter side A");
+                    isParsable = double.TryParse(Console.ReadLine(), out sideA);
                 }
                 while (isParsable == false);
 
-                if (selector == 1)
+                double sideB;
+                do
                 {
-                    decimal baseOfTriangle;
-                    do
-                    {
-                        Console.WriteLine("enter the base of your triangle");
-                        isParsable = decimal.TryParse(Console.ReadLine(), out baseOfTriangle);
-
-                        if (isParsable == false)
-                        {
-                            Console.WriteLine("Could not parse. try again");
-                        }
-
-                        if (isParsable)
-                        {
-                            if (baseOfTriangle < 0)
-                            {
-                                Console.WriteLine("No negative numbers");
-                                isParsable = false;
-                            }
-
-                            if (baseOfTriangle == 0)
-                            {
-                                Console.WriteLine("You entered 0 or nothing.. try again");
-                                isParsable = false;
-                            }
-
-                        }
-
-                    }
-                    while (isParsable == false);
-
-                    do
-                    {
-                        Console.WriteLine("Enter the height of your triangle");
-                        isParsable = decimal.TryParse(Console.ReadLine(), out decimal height);
-
-                        if (isParsable == false)
-                        {
-                            Console.WriteLine("Could not parse. try again");
-                        }
-
-                        if (isParsable)
-                        {
-                            if (height < 0)
-                            {
-                                Console.WriteLine("No Negative numbers");
-                                isParsable = false;
-                            }
-
-                            if (height == 0)
-                            {
-                                Console.WriteLine("You entered 0 or nothing.. try again");
-                                isParsable = false;
-                            }
-
-                            floorSize = baseOfTriangle * height / 2;
-                        }
-
-                    }
-                    while (isParsable == false);
-
+                    Console.WriteLine($"Enter side B");
+                    isParsable = double.TryParse(Console.ReadLine(), out sideB);
                 }
+                while (isParsable == false);
 
-                else
+                double sideC;
+                do
                 {
-                    // cant be inlined if i want to perform the calculation at the end 
-                    double sideA;
-                    double sideB;
-                    Console.WriteLine("Enter your 3 sides of your triangle");
-                    do
-                    {
-                        Console.WriteLine($"Enter side A");
-                        isParsable = double.TryParse(Console.ReadLine(), out sideA);
-
-                        if (isParsable == false)
-                        {
-                            Console.WriteLine("Couldnt parse. try again");
-                        }
-
-                        if (isParsable)
-                        {
-                            if (sideA < 0)
-                            {
-                                Console.WriteLine("No negative numbers");
-                                isParsable = false;
-                            }
-
-                            if (sideA == 0)
-                            {
-                                Console.WriteLine("You entered 0 or nothing.. try again");
-                            }
-
-                        }
-
-                    }
-                    while (isParsable == false);
-
-                    do
-                    {
-                        Console.WriteLine($"Enter side B");
-                        isParsable = double.TryParse(Console.ReadLine(), out sideB);
-
-                        if (isParsable == false)
-                        {
-                            Console.WriteLine("Couldnt parse. try again");
-                        }
-
-                        if (isParsable)
-                        {
-                            if (sideB < 0)
-                            {
-                                Console.WriteLine("No negative numbers");
-                                isParsable = false;
-                            }
-
-                            if (sideB == 0)
-                            {
-                                Console.WriteLine("You entered 0 or nothing.. try again");
-                            }
-
-                        }
-
-                    }
-                    while (isParsable == false);
-
-                    do
-                    {
-                        Console.WriteLine($"Enter side C");
-                        isParsable = double.TryParse(Console.ReadLine(), out double sideC);
-
-                        if (isParsable == false)
-                        {
-                            Console.WriteLine("Couldnt parse. try again");
-                        }
-
-                        if (isParsable)
-                        {
-                            if (sideC < 0)
-                            {
-                                Console.WriteLine("No negative numbers");
-                                isParsable = false;
-                            }
-
-                            if (sideC == 0)
-                            {
-                                Console.WriteLine("You entered 0 or nothing.. try again");
-                            }
-
-                            double s = (sideA + sideB + sideC) / 2;
-                            double Area = Math.Sqrt(s * (s - sideA) * (s - sideB) * (s - sideC));
-                            floorSize = Convert.ToDecimal(Area);
-                        }
-
-                    }
-                    while (isParsable == false);
-
+                    Console.WriteLine($"Enter side C");
+                    isParsable = double.TryParse(Console.ReadLine(), out sideC);
                 }
+                while (isParsable == false);
 
+                // now that we have our values we will do the calculations
+
+                double s = (sideA + sideB + sideC) / 2;
+                double area = Math.Sqrt(s * (s - sideA) * (s - sideB) * (s - sideC));
+                floorSize = Convert.ToDecimal(area);
             }
             // circles
             if (floorType == 3)
