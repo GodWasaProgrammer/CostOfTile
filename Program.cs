@@ -7,10 +7,11 @@
 
         static void Main()
         {
-            double costPerTile;
+
 
             Console.WriteLine("Welcome to the Tile Cost Processing software");
             bool isParsable;
+            double costPerTile;
             do
             {
                 Console.WriteLine("enter your cost per tile");
@@ -95,7 +96,6 @@
 
                 double s = (sideA + sideB + sideC) / 2;
                 floorSize = Math.Sqrt(s * (s - sideA) * (s - sideB) * (s - sideC));
-
             }
             // circles
             if (floorType == 3)
