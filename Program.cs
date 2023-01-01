@@ -2,19 +2,19 @@
 {
     public class Program
     {
-        const decimal COSTPERHOUR = 86; // dollars
-        const decimal FLOORINGPERHOUR = 18.580608M; // square centimeters ( 20 foot )
+        const double COSTPERHOUR = 86; // dollars
+        const double FLOORINGPERHOUR = 18.580608; // square centimeters ( 20 foot )
 
         static void Main()
         {
-            decimal costPerTile;
+            double costPerTile;
 
             Console.WriteLine("Welcome to the Tile Cost Processing software");
             bool isParsable;
             do
             {
                 Console.WriteLine("enter your cost per tile");
-                isParsable = decimal.TryParse(Console.ReadLine(), out costPerTile);
+                isParsable = double.TryParse(Console.ReadLine(), out costPerTile);
             }
             while (isParsable == false);
 
@@ -35,29 +35,31 @@
             }
             while (isParsable == false);
 
-            decimal floorSize = 0;
+            double floorSize = 0;
             // rectangle 
             if (floorType == 1)
             {
 
-                decimal length;
+                double length;
                 do
                 {
                     Console.WriteLine("Enter the height of our rectangle");
 
-                    isParsable = decimal.TryParse(Console.ReadLine(), out length);
+                    isParsable = double.TryParse(Console.ReadLine(), out length);
                 }
                 while (isParsable == false);
 
+                double width;
                 do
                 {
                     Console.WriteLine("Enter the width of our rectangle");
 
-                    isParsable = decimal.TryParse(Console.ReadLine(), out decimal width);
-                    floorSize = length * width;
+                    isParsable = double.TryParse(Console.ReadLine(), out width);
+
                 }
                 while (isParsable == false);
 
+                floorSize = length * width;
             }
 
             // herons formula
@@ -92,8 +94,8 @@
                 // now that we have our values we will do the calculations
 
                 double s = (sideA + sideB + sideC) / 2;
-                double area = Math.Sqrt(s * (s - sideA) * (s - sideB) * (s - sideC));
-                floorSize = Convert.ToDecimal(area);
+                floorSize = Math.Sqrt(s * (s - sideA) * (s - sideB) * (s - sideC));
+
             }
             // circles
             if (floorType == 3)
@@ -103,43 +105,47 @@
                 string circleChoice = Console.ReadLine();
                 if (circleChoice == "r")
                 {
+                    double radius;
                     do
                     {
                         Console.WriteLine("Enter your radius to calculate your floor size");
-                        isParsable = decimal.TryParse(Console.ReadLine(), out decimal radius);
-                        floorSize = Convert.ToDecimal(Math.PI) * (radius *= radius);
+                        isParsable = double.TryParse(Console.ReadLine(), out radius);
                     }
                     while (isParsable == false);
 
+                    floorSize = Math.PI * (radius *= radius);
                 }
 
                 else
                 {
+                    double diameter;
                     do
                     {
                         Console.WriteLine("Enter your diameter to calculate your circle area by diameter");
-                        isParsable = decimal.TryParse(Console.ReadLine(), out decimal diameter);
-                        floorSize = Convert.ToDecimal(Math.PI) * diameter;
+                        isParsable = double.TryParse(Console.ReadLine(), out diameter);
+
                     }
                     while (isParsable == false);
+
+                    floorSize = Math.PI * diameter;
                 }
 
             }
 
             // the amount of work hours needed for your specified floor.
-            decimal materialCost = floorSize * costPerTile;
+            double materialCost = floorSize * costPerTile;
             Console.WriteLine($"The Material cost is:{Math.Round(materialCost, 3)} Dollars");
 
             // hours needed to cover the specified floor with tiles
-            decimal workHours = floorSize / FLOORINGPERHOUR;
+            double workHours = floorSize / FLOORINGPERHOUR;
             Console.WriteLine($"The amount of work hours needed for your floor: {Math.Round(workHours, 3)}");
 
             // your wagecost for flooring your specific floor
-            decimal wageCost = workHours * COSTPERHOUR;
+            double wageCost = workHours * COSTPERHOUR;
             Console.WriteLine($"The cost of the actual flooring: {Math.Round(wageCost, 3)} Dollars");
 
             // the complete cost of flooring and material
-            decimal totalCost = wageCost + materialCost;
+            double totalCost = wageCost + materialCost;
             Console.WriteLine($"Your total cost is:{Math.Round(totalCost, 3)} Dollars");
         }
     }
