@@ -7,8 +7,6 @@
 
         static void Main()
         {
-
-
             Console.WriteLine("Welcome to the Tile Cost Processing software");
             bool isParsable;
             double costPerTile;
@@ -40,7 +38,6 @@
             // rectangle 
             if (floorType == 1)
             {
-
                 double length;
                 do
                 {
@@ -62,7 +59,6 @@
 
                 floorSize = length * width;
             }
-
             // herons formula
             if (floorType == 2)
 
@@ -102,8 +98,7 @@
             {
                 Console.WriteLine("Would you like to calculate your circle by radius or diameter? enter r for radius, else it will be by diameter.");
 
-                string circleChoice = Console.ReadLine();
-                if (circleChoice == "r")
+                if (Console.ReadLine() == "r")
                 {
                     double radius;
                     do
