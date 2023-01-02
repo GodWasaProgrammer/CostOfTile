@@ -108,7 +108,7 @@
                     }
                     while (isParsable == false);
 
-                    floorSize = Math.PI * (radius *= radius);
+                    floorSize = Math.PI * (radius * radius);
                 }
 
                 else
@@ -121,8 +121,8 @@
 
                     }
                     while (isParsable == false);
-
-                    floorSize = Math.PI * diameter;
+                    // Area of a Circle = π d2/4
+                    floorSize = Math.PI * diameter*diameter / 4;
                 }
 
             }
